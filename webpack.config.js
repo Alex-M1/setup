@@ -1,10 +1,10 @@
-const { Configuration, ProvidePlugin } = require("webpack")
-const path = require('path')
-const { CleanWebpackPlugin } = require("clean-webpack-plugin")
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-const HTMLWebpackPlugin = require('html-webpack-plugin')
+const { ProvidePlugin } = require('webpack');
+const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HTMLWebpackPlugin = require('html-webpack-plugin');
 
-const isDev = process.env.NODE_ENV === 'development'
+const isDev = process.env.NODE_ENV === 'development';
 
 const config = {
   entry: ['regenerator-runtime/runtime', './src/index.tsx'],
@@ -30,7 +30,7 @@ const config = {
   },
   devServer: {
     port: 4200,
-    hot: isDev
+    hot: isDev,
   },
   plugins: [
     new ProvidePlugin({
@@ -39,17 +39,17 @@ const config = {
     new CleanWebpackPlugin(),
     new HTMLWebpackPlugin({
       template: './src/index.html',
-      filename: 'index.[contenthash].html',
+      filename: 'index.html',
       minify: {
-        collapseWhitespace: !isDev
-      }
+        collapseWhitespace: !isDev,
+      },
     }),
-    // new CopyWebpackPlugin({
-    //   patterns: [{
-    //     from: './src/assets',
-    //     to: './src/assets',
-    //   }]
-    // }),
+    new CopyWebpackPlugin({
+      patterns: [{
+        from: './src/assets',
+        to: 'assets',
+      }],
+    }),
   ],
   module: {
     rules: [
@@ -67,8 +67,8 @@ const config = {
         test: /\.(jpe?g|png|ttf|woff|woff2|eot|svg)$/,
         use: ['url-loader?limit=100000'],
       },
-    ]
-  }
-}
+    ],
+  },
+};
 
-module.exports = config
+module.exports = config;
