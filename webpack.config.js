@@ -3,6 +3,7 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
+const { InjectManifest } = require('workbox-webpack-plugin');
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -31,6 +32,7 @@ const config = {
   devServer: {
     port: 4200,
     hot: isDev,
+    historyApiFallback: true,
   },
   plugins: [
     new ProvidePlugin({
@@ -49,6 +51,10 @@ const config = {
         from: './src/assets',
         to: 'assets',
       }],
+    }),
+    new InjectManifest({
+      swSrc: './src/serviceworkers/sw.ts',
+      swDest: 'service-worker.js',
     }),
   ],
   module: {

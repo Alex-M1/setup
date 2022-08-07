@@ -4,6 +4,7 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
+import Page404 from '../Page404';
 
 interface IProps {
 
@@ -17,6 +18,7 @@ const App: React.FC<IProps> = () => (
     <Routes>
       <Route element={<Suspense fallback={<div>Загрузка...</div>}><PageOne /></Suspense>} path="/" />
       <Route element={<Suspense fallback={<div>Загрузка...</div>}><PageTwo /></Suspense>} path="/page2" />
+      <Route path="*" element={<Page404 />} />
     </Routes>
   </Router>
 );
